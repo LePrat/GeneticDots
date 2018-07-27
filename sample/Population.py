@@ -9,6 +9,8 @@ class Population:
         self.canvas_coords = canvas_coords
         self.fitness_sum = 0
         self.gen = 1
+        self.best_dot = 0
+        self.min_step = 400
         for i in range(0, size):
             self.dots.append(Dot(canvas, canvas_coords, target_coords, Vector(pos.x, pos.y), radius, color))
 
@@ -18,7 +20,10 @@ class Population:
 
     def update(self):
         for dot in self.dots:
-            dot.update()
+            if dot.get_brain().get_step() > self.min_step:
+                dot.kill()
+            else:
+                dot.update()
 
     def calculate_fitness(self):
         for dot in self.dots:
@@ -30,10 +35,14 @@ class Population:
                 return False
         return True
 
-    def natural_selection(self):
+    def natural_selection(self):  # modify so reset dot instead of create new ones
         new_dots = []
+        self.set_best_dot()
         self.calculate_sum_fitness()
-        for i in range(0, len(self.dots)):
+        new_dots.append(self.dots[self.best_dot].pop_baby())
+        new_dots[0].set_is_best()
+        self.dots[0].erase()
+        for i in range(1, len(self.dots)):
             parent = self.select_parent()
             new_dots.append(parent.pop_baby())
             self.dots[i].erase()
@@ -51,16 +60,20 @@ class Population:
         for dot in self.dots:
             running_sum += dot.get_fitness()
             if running_sum > rand:
-                return dot
+                return copy.copy(dot)
         return None
 
     def mutate_babies(self):
-        for dot in self.dots:
-            dot.get_brain().mutate()
+        for i in range(1, len(self.dots)):
+            self.dots[i].get_brain().mutate()
 
-    # def reset_dots(self):
-    #     for dot in self.dots:
-    #         dot.ressurect()
-    #         dot.set_pos(Vector(self.canvas_coords.x / 2, self.canvas_coords.y - self.canvas_coords.y / 5))
-    #         dot.set_brain()
-
+    def set_best_dot(self):
+        maximum = 0
+        max_index = 0
+        for i in range(0, len(self.dots)):
+            if self.dots[i].get_fitness() > maximum:
+                maximum = self.dots[i].get_fitness()
+                max_index = i
+        self.best_dot = max_index
+        if self.dots[self.best_dot].has_reach_target():
+            self.min_step = self.dots[self.best_dot].get_brain().get_step()

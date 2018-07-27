@@ -19,13 +19,21 @@ class Dot:
         self.target_coords = target_coords
         self.dead = False
         self.reach_target = False
+        self.is_best = False
         self.entity = [self.canvas.create_oval(pos.x, pos.y, pos.x + self.radius * 2, pos.y + self.radius * 2, fill=color, outline =""),
                        self.canvas.create_oval(pos.x - self.fix, pos.y - self.fix, pos.x + self.radius * 2 + self.fix, pos.y + self.radius * 2 + self.fix, fill="", outline="")]
         self.fitness = 0
 
     def show(self):
-        self.canvas.coords(self.entity[0], self.pos.x, self.pos.y, self.pos.x + self.radius * 2, self.pos.y + self.radius * 2)
-        self.canvas.coords(self.entity[1], self.pos.x - self.fix, self.pos.y - self.fix, self.pos.x + self.radius * 2 + self.fix, self.pos.y + self.radius * 2 + self.fix)
+        if self.is_best is True:
+            best_size = 3
+            self.canvas.itemconfig(self.entity[0], fill="orange", outline="black")
+            self.canvas.coords(self.entity[0], self.pos.x - best_size, self.pos.y - best_size, self.pos.x + self.radius * 2 + best_size, self.pos.y + self.radius * 2 + best_size)
+            self.canvas.coords(self.entity[1], self.pos.x - self.fix, self.pos.y - self.fix, self.pos.x + self.radius * 2 + self.fix, self.pos.y + self.radius * 2 + self.fix)
+            self.canvas.tag_raise(self.entity[0])
+        else:
+            self.canvas.coords(self.entity[0], self.pos.x, self.pos.y, self.pos.x + self.radius * 2, self.pos.y + self.radius * 2)
+            self.canvas.coords(self.entity[1], self.pos.x - self.fix, self.pos.y - self.fix, self.pos.x + self.radius * 2 + self.fix, self.pos.y + self.radius * 2 + self.fix)
 
     def set_pos(self, pos):
         self.pos.x = pos.x
@@ -36,6 +44,12 @@ class Dot:
 
     def is_dead(self):
         return self.dead
+
+    def kill(self):
+        self.dead = True
+
+    def set_is_best(self):
+        self.is_best = True
 
     def has_reach_target(self):
         return self.reach_target
@@ -94,7 +108,7 @@ class Dot:
 
     def calculate_fitness(self):
         if self.reach_target is True:
-            self.fitness = 1 / (self.brain.get_step() * self.brain.get_step())
+            self.fitness = 1/16 + 10000 / (self.brain.get_step() * self.brain.get_step())
         else:
             distance_to_goal = math.sqrt(math.pow(self.target_coords.x - self.pos.x, 2) + math.pow(self.target_coords.y - self.pos.y, 2))
             self.fitness = 1 / math.pow(distance_to_goal, 2)
