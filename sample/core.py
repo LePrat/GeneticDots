@@ -9,7 +9,7 @@ class Interface(Frame):
         self.width = 500
         self.height = 500
         self.radius = 1.5
-        self.size = 500
+        self.size = 300
         self.dots = []
         Frame.__init__(self, fenetre, width=self.width, height=self.height, **kwargs)
         self.pack(fill=BOTH)

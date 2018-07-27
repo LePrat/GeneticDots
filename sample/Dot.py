@@ -5,7 +5,7 @@ import copy
 
 
 class Dot:
-    def __init__(self, canvas, canvas_coords, target_coords, pos, radius, color):
+    def __init__(self, canvas, canvas_coords, target_coords, pos, radius, color, obstacle=None):
         self.brain = Brain(400)
         self.radius = radius
         self.pos = pos
@@ -17,6 +17,7 @@ class Dot:
         self.color = color
         self.canvas_coords = canvas_coords
         self.target_coords = target_coords
+        self.obstacle = obstacle
         self.dead = False
         self.reach_target = False
         self.is_best = False
@@ -92,6 +93,7 @@ class Dot:
             self.move()
             self.touch_wall()
             self.touch_target()
+            self.touch_obstacle()
 
     def touch_wall(self):
         if (self.pos.x + self.get_radius() * 2 >= self.canvas_coords.x or
@@ -106,6 +108,12 @@ class Dot:
                 self.target_coords.y - interval <= self.pos.y + self.get_radius() <= self.target_coords.y + interval):
             self.reach_target = True
 
+    def touch_obstacle(self):
+        if self.obstacle is not None and \
+                self.obstacle.get_pos().x <= self.pos.x + self.get_radius() <= self.obstacle.get_pos().x + self.obstacle.get_size().x and \
+                self.obstacle.get_pos().y <= self.pos.y + self.get_radius() <= self.obstacle.get_pos().y + self.obstacle.get_size().y:
+            self.dead = True
+
     def calculate_fitness(self):
         if self.reach_target is True:
             self.fitness = 1/16 + 10000 / (self.brain.get_step() * self.brain.get_step())
@@ -114,7 +122,7 @@ class Dot:
             self.fitness = 1 / math.pow(distance_to_goal, 2)
 
     def pop_baby(self):
-        baby = Dot(self.canvas, self.canvas_coords, self.target_coords, Vector(self.start_pos.x, self.start_pos.y), self.radius, self.color)
+        baby = Dot(self.canvas, self.canvas_coords, self.target_coords, Vector(self.start_pos.x, self.start_pos.y), self.radius, self.color, self.obstacle)
         baby.brain = self.brain.clone()
         return baby
 
