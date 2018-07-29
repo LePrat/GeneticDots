@@ -9,14 +9,14 @@ class Interface(Frame):
         self.width = 500
         self.height = 500
         self.radius = 1.5
-        self.size = 300
+        self.size = 500
         self.dots = []
         Frame.__init__(self, fenetre, width=self.width, height=self.height, **kwargs)
         self.pack(fill=BOTH)
         self.start_button = Button(fenetre, width=50, text="Start", fg="black", command=self.run)
         self.canvas = Canvas(self, bg="white", width=self.width, height=self.height)
         self.start_button.pack()
-        self.target = Dot(self.canvas, Vector(self.width, self.height), Vector(0, 0), Vector(self.width / 2, self.radius * 3), 5, "green")
+        self.target = Dot(self.canvas, Vector(self.width, self.height), Vector(0, 0), Vector(self.width / 2, self.radius * 10), 5, "green")
         self.population = self.pop_init()
 
     def pop_init(self):
@@ -29,10 +29,10 @@ class Interface(Frame):
 
     def animation(self):
         if self.population.all_dead() is True:
+            print("Generation:", self.population.get_gen())
             self.population.calculate_fitness()
             self.population.natural_selection()
             self.population.mutate_babies()
-            print("RESET")
         else:
             self.population.update()
             self.population.show()

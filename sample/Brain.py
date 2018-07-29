@@ -26,7 +26,7 @@ class Brain:
         clone = Brain(len(self.directions))
         clone.get_direction().clear()
         for i in range(0, len(self.directions)):
-            clone.get_direction().append(copy.deepcopy(self.directions[i]))
+            clone.get_direction().append(copy.copy(self.directions[i]))
         return clone
 
     def mutate(self):

@@ -5,7 +5,7 @@ import copy
 
 
 class Dot:
-    def __init__(self, canvas, canvas_coords, target_coords, pos, radius, color, obstacle=None):
+    def __init__(self, canvas, canvas_coords, target_coords, pos, radius, color, obstacles=None):
         self.brain = Brain(400)
         self.radius = radius
         self.pos = pos
@@ -17,7 +17,7 @@ class Dot:
         self.color = color
         self.canvas_coords = canvas_coords
         self.target_coords = target_coords
-        self.obstacle = obstacle
+        self.obstacles = obstacles
         self.dead = False
         self.reach_target = False
         self.is_best = False
@@ -85,7 +85,7 @@ class Dot:
         else:
             self.dead = True
         self.velocity.add(self.acceleration)
-        self.velocity.limit(7)
+        self.velocity.limit(6)
         self.pos.add(self.velocity)
 
     def update(self):
@@ -109,20 +109,21 @@ class Dot:
             self.reach_target = True
 
     def touch_obstacle(self):
-        if self.obstacle is not None and \
-                self.obstacle.get_pos().x <= self.pos.x + self.get_radius() <= self.obstacle.get_pos().x + self.obstacle.get_size().x and \
-                self.obstacle.get_pos().y <= self.pos.y + self.get_radius() <= self.obstacle.get_pos().y + self.obstacle.get_size().y:
-            self.dead = True
+        if self.obstacles is not None:
+            for obstacle in self.obstacles:
+                if obstacle.get_pos().x <= self.pos.x + self.get_radius() <= obstacle.get_pos().x + obstacle.get_size().x and \
+                        obstacle.get_pos().y <= self.pos.y + self.get_radius() <= obstacle.get_pos().y + obstacle.get_size().y:
+                    self.dead = True
 
     def calculate_fitness(self):
         if self.reach_target is True:
-            self.fitness = 1/16 + 10000 / (self.brain.get_step() * self.brain.get_step())
+            self.fitness = 1.0/16.0 + 10000.0 / (self.brain.get_step() * self.brain.get_step())
         else:
             distance_to_goal = math.sqrt(math.pow(self.target_coords.x - self.pos.x, 2) + math.pow(self.target_coords.y - self.pos.y, 2))
-            self.fitness = 1 / math.pow(distance_to_goal, 2)
+            self.fitness = 1 / math.pow(distance_to_goal, 3)
 
     def pop_baby(self):
-        baby = Dot(self.canvas, self.canvas_coords, self.target_coords, Vector(self.start_pos.x, self.start_pos.y), self.radius, self.color, self.obstacle)
+        baby = Dot(self.canvas, self.canvas_coords, self.target_coords, Vector(self.start_pos.x, self.start_pos.y), self.radius, self.color, self.obstacles)
         baby.brain = self.brain.clone()
         return baby
 

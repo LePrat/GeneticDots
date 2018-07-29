@@ -13,9 +13,13 @@ class Population:
         self.gen = 1
         self.best_dot = 0
         self.min_step = 400
-        self.obstacle = Obstacle(canvas, canvas_coords)
+        self.obstacles = [Obstacle(canvas, Vector(0, 2 * canvas_coords.y / 3), Vector(canvas_coords.x - 100, 10)),
+                          Obstacle(canvas, Vector(200, canvas_coords.y / 3), Vector(canvas_coords.x - 100, 10))]
         for i in range(0, size):
-            self.dots.append(Dot(canvas, canvas_coords, target_coords, Vector(pos.x, pos.y), radius, color, self.obstacle))
+            self.dots.append(Dot(canvas, canvas_coords, target_coords, Vector(pos.x, pos.y), radius, color, self.obstacles))
+
+    def get_gen(self):
+        return self.gen
 
     def show(self):
         for dot in self.dots:
@@ -80,5 +84,5 @@ class Population:
         self.best_dot = max_index
         if self.dots[self.best_dot].has_reach_target():
             self.min_step = self.dots[self.best_dot].get_brain().get_step()
-        print(maximum)
+        print("Score:", maximum)
 
