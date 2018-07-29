@@ -16,7 +16,7 @@ A simple genetic algorithm where a bunch of dots try to find their way to the ta
 apt-get install python-tk
 ```
 
-### Installing
+### Launching
 
 
 From root
