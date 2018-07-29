@@ -1,5 +1,8 @@
 # Genetic Dots
 
+![Genetic Dots](https://imgur.com/a/WRa5RW6.gif)
+
+
 - **Language:** Python
 
 A simple genetic algorithm where a bunch of dots try to find their way to the target.
