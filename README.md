@@ -1,6 +1,6 @@
 # Genetic Dots
 
-<a href="https://imgur.com/8XlNbmY"><img src="https://i.imgur.com/8XlNbmYl.gif" title="source: imgur.com" /></a>
+[![GeneticDots](https://img.youtube.com/vi/Box4UPPac50/0.jpg)](https://www.youtube.com/watch?v=Box4UPPac50)
 
 - **Language:** Python
 
