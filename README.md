@@ -1,6 +1,6 @@
 # Genetic Dots
 
-<a href="https://imgflip.com/gif/2exfuy"><img src="https://i.imgflip.com/2exfuy.gif" title="GeneticDots"/></a>
+<a href="https://i.imgur.com/8XlNbmY.mp4"><img src="https//i.imgur.com/8XlNbmY.gif" title="GeneticDots"/></a>
 
 - **Language:** Python
 
