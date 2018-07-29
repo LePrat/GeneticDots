@@ -1,6 +1,6 @@
 # Genetic Dots
 
-[Imgur](https://i.imgur.com/8XlNbmY.gifv)
+![Imgur](http://i.imgur.com/8XlNbmY.gif)
 
 - **Language:** Python
 
