@@ -2,7 +2,7 @@
 
 - **Language:** Python
 
-A simple genetic algorithm where a bunch of dots try to find the path to the target.
+A simple genetic algorithm where a bunch of dots try to find their way to the target.
 
 ## Getting Started
 
