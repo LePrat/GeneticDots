@@ -1,12 +1,6 @@
 # Genetic Dots
 
-![Genetic Dots](http://i.imgur.com/8XlNbmYb.gif)
-
-![](http://i.imgur.com/OUkLi.gif)
-
-![](http://i.imgur.com/Ssfp7.gif)
-
-![](http://i.imgur.com/60bts.gif)
+<a href="https://imgur.com/8XlNbmY"><img src="https://i.imgur.com/8XlNbmYl.gif" title="source: imgur.com" /></a>
 
 - **Language:** Python
 
