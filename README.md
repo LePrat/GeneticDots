@@ -1,6 +1,6 @@
 # Genetic Dots
 
-[![GeneticDots](https://img.youtube.com/vi/Box4UPPac50/0.jpg)](https://www.youtube.com/watch?v=Box4UPPac50)
+[![](http://img.youtube.com/vi/Box4UPPac50/0.jpg)](http://www.youtube.com/watch?v=Box4UPPac50 "")
 
 - **Language:** Python
 
