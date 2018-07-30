@@ -6,7 +6,7 @@
 
 A simple genetic algorithm where a bunch of dots try to find their way to the target.
 
-It is based on an natural selection algorithm where the closest dots have better chances to be cloned for the next generation.
+It is based on a natural selection algorithm where the closest dots have better chances to be cloned for the next generation.
 
 ## Getting Started
 
