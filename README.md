@@ -17,7 +17,7 @@ It is based on a natural selection algorithm where the closest dots have better 
 - tkinter (installed by default), if not :
 
 ```
-apt-get install python-tk
+apt-get install python3-tk
 ```
 
 ### Launching
